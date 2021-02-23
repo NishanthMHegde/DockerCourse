@@ -1,0 +1,18 @@
+What is Docker?
+
+Docker is a platform/ecosystem that helps in running and managing containers.
+It consists of Docker Client, Docker server, Docker Hub, Docker Compose and other programs that help in creating, running and managing containers.
+
+What is a Container?
+
+Let us take a look at how a general Operating System works. 
+An OS consists of:
+1. A set of applications or programs (like Notepad, NodeJS, Python, ReactJS ,etc). These applications make system calls to the Kernel in order to access the memory, hard disk or CPU. 
+Kernel is a software running on the OS that handles the system calls and accesses the memory, CPU or hardware.
+
+A Container helps in efficiently making use of the system resources by making use of 2 strategies:
+1. Namsespacing: It helps in segregating the programs that need to be used by a particular application. For example, NodeJS might require making calls to Python2 whereas ReactJS might require making calls to Python3. Namespacing helps in grouping the programs accordingly. 
+
+2. Control Groups: Helps in segregating the memory, CPU and Hard Disk for each of the applications and creates segments in hard disk for each application. 
+
+Containers run on the Docker Virtual Machine. Docker is an OS running on a Virtual Machine and its Containers run on that Virtual Machine and not on our host operating system.

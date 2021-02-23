@@ -1,0 +1,33 @@
+The docker run <image_name> command performs the following operations:
+1. Downloads the image from the Docker Hub (if not present in the local cache).
+2. Create the container with the required start up command. 
+3.Start the container which will eventually run the start up command. 
+
+As evident from the above steps, docker run is an amalgamation of "docker create <image_name> 'start-up-command'" and "docker start -a <container_id>". 
+
+Let us run a busybox container using docker create and docker start.
+
+1. docker create busybox echo "hello world!"
+
+	Output:
+	docker create busybox echo "hello world!"
+	d46d9ef53e0a8edc298b840cc18191510a684dd41a917ff0174d2558e3a70b55
+
+2. docker start -a d46d9ef53e0a8edc298b840cc18191510a684dd41a917ff0174d2558e3a70b55
+
+	Output:
+	docker start -a d46d9ef53e0a8edc298b840cc18191510a684dd41a917ff0174d2558e3a70b55
+	hello world!
+
+
+-a option is used with docker start in order to attach the output to the terminal screen. 
+
+What happens if we try to run a different command with docker start?
+
+Command run: docker start -a d46d9ef53e0a8edc298b840cc18191510a684dd41a917ff0174d2558e3a70b55 echo "Bye World!"
+
+	Output:
+	docker start -a d46d9ef53e0a8edc298b840cc18191510a684dd41a917ff0174d2558e3a70b55 echo "Bye World!"
+	you cannot start and attach multiple containers at once
+
+We see that if we try to run a different startup command, docker gets confused that we are trying to spin up multiple containers and throws an error. 

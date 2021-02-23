@@ -1,0 +1,35 @@
+Let us run a simple Container.
+
+1. Use the command docker run busybox:
+
+Output:
+Unable to find image 'busybox:latest' locally
+latest: Pulling from library/busybox
+5c4213be9af9: Pull complete
+Digest: sha256:c6b45a95f932202dbb27c31333c4789f45184a744060f6e569cc9d2bf1b9ad6f
+Status: Downloaded newer image for busybox:latest
+
+2. Let us now run the command again.
+
+Output:
+We do not see an output as the image was present in the local cache. The same image is used to spin up a container. 
+
+
+
+Steps taken by Docker to start up a container:
+ 1. The Docker client contacts the Docker daemon.
+ 2. The Docker daemon pulls the required image from the Docker Hub.
+ 3. The Docker daemon creates a new container from that image.
+ 4. The Docker daemon streams any output produced to the Docker client, which sends it
+    to your terminal.
+
+
+
+How is an image converted to a container?
+
+An image consists of a snapshot of the filesystem belonging to the particular OS image, other dependencies and an optional start up command. This file system snapshot is placed in the segmented hard disk (done by control groups) and the optional start up command is placed in the executable. This forms the basis of creation of a container. 
+
+This process can be related to how an ordinary OS works which was described in the previous chapter. 
+The startup command is treated as the executable program which makes the system call to the Kernel. The file system is the namespace that is placed in the segmented control group.  
+
+
