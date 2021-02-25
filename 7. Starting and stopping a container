@@ -1,0 +1,58 @@
+We can stop a container using "docker stop <container_id>" and again start a container using "docker start -a <container_id>"
+
+Let us stop an already running container shown below:
+CONTAINER ID   IMAGE     COMMAND                 CREATED          STATUS          PORTS     NAMES
+8e1748e848ad   busybox   "ping www.google.com"   20 minutes ago   Up 20 minutes             stoic_visvesvaraya
+
+1. docker stop 8e1748e848ad
+
+	Output:
+	λ docker stop 8e1748e848ad
+	8e1748e848ad
+
+We can verify that the container was stopped by running the "docker ps" and "docker ps -a" command:
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+D:\
+λ docker ps -a
+CONTAINER ID   IMAGE         COMMAND                 CREATED          STATUS                        PORTS     NAMES
+8e1748e848ad   busybox       "ping www.google.com"   21 minutes ago   Exited (137) 26 seconds ago             stoic_visvesvaraya
+
+We can now start the container back again. 
+
+2. docker start -a 8e1748e848ad
+
+	Output:
+	λ docker start -a 8e1748e848ad
+	PING www.google.com (216.58.197.68): 56 data bytes
+	64 bytes from 216.58.197.68: seq=0 ttl=37 time=15.722 ms
+	64 bytes from 216.58.197.68: seq=1 ttl=37 time=14.793 ms
+
+We can verify that the container is running by running the "docker ps" and "docker ps -a" command:
+D:\
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND                 CREATED          STATUS          PORTS     NAMES
+8e1748e848ad   busybox   "ping www.google.com"   23 minutes ago   Up 44 seconds             stoic_visvesvaraya
+
+D:\
+λ docker ps -a
+CONTAINER ID   IMAGE         COMMAND                 CREATED          STATUS                      PORTS     NAMES
+8e1748e848ad   busybox       "ping www.google.com"   23 minutes ago   Up 46 seconds                         stoic_visvesvaraya
+
+
+We can also kill a running container. This will immediately terminate the container and make it exit.
+
+3. docker kill 8e1748e848ad
+	Output:
+	λ docker kill 8e1748e848ad
+	8e1748e848ad
+
+We can verify that the container was stopped by running the "docker ps" and "docker ps -a" command:
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+D:\
+λ docker ps -a
+CONTAINER ID   IMAGE         COMMAND                 CREATED          STATUS                        PORTS     NAMES
+8e1748e848ad   busybox       "ping www.google.com"   25 minutes ago   Exited (137) 26 seconds ago             stoic_visvesvaraya

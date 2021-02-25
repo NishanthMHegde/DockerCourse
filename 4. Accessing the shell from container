@@ -1,0 +1,31 @@
+We can access the shell inside the container in order to execute commands on the container and have a persistent container run. In this way, the container exits only after the user decides to exit from the container using the shell/terminal. 
+This can be done by using the docker exec command on a running container. 
+
+
+1. (Access a stopped container). 
+
+	docker exec -it 8e1748e848ad /bin/sh
+
+	Output:
+	λ docker exec -it 8e1748e848ad /bin/sh
+	/ # ls -l
+	total 36
+	drwxr-xr-x    2 root     root         12288 Feb 18 00:41 bin
+	drwxr-xr-x    5 root     root           340 Feb 25 14:36 dev
+	drwxr-xr-x    1 root     root          4096 Feb 25 14:36 etc
+	drwxr-xr-x    2 nobody   nobody        4096 Feb 18 00:41 home
+	dr-xr-xr-x  139 root     root             0 Feb 25 14:36 proc
+	drwx------    1 root     root          4096 Feb 25 14:37 root
+	dr-xr-xr-x   11 root     root             0 Feb 25 14:36 sys
+	drwxrwxrwt    2 root     root          4096 Feb 18 00:41 tmp
+	drwxr-xr-x    3 root     root          4096 Feb 18 00:41 usr
+	drwxr-xr-x    4 root     root          4096 Feb 18 00:41 var
+	/ # echo "Hello guys!"
+	Hello guys!
+	/ # pwd
+	/
+	/ # whoami
+	root
+	/ # exit
+
+In the above example, we accessed a running container 8e1748e848ad and accessed the shell terminal. Using this shell terminal, we executed few linux commands and then exited the container using the "exit" Linux command. 

@@ -1,0 +1,23 @@
+All the running and exited containers can be viewed by using the docker ps command. 
+
+
+1. View only the running containers (docker ps)
+
+	Output:
+	λ docker ps
+	CONTAINER ID   IMAGE     COMMAND                 CREATED         STATUS         PORTS     NAMES
+	8e1748e848ad   busybox   "ping www.google.com"   7 minutes ago   Up 7 minutes             stoic_visvesvaraya
+
+
+2. View all running as well as exited containers (docker ps -a)
+
+	Output:
+	λ docker ps -a
+	CONTAINER ID   IMAGE         COMMAND                 CREATED         STATUS                     PORTS     NAMES
+	8e1748e848ad   busybox       "ping www.google.com"   8 minutes ago   Up 8 minutes                         stoic_visvesvaraya
+	a0b0fa1ed4b4   busybox       "/bin/sh"               8 minutes ago   Exited (0) 8 minutes ago             infallible_edison
+	d46d9ef53e0a   busybox       "echo 'hello world!'"   2 days ago      Exited (0) 9 minutes ago             optimistic_nash
+	bf21e281cd22   busybox       "sh"                    2 days ago      Exited (0) 2 days ago                stoic_rubin
+	dc7e9bf16646   busybox       "sh"                    2 days ago      Exited (0) 2 days ago                romantic_mayer
+	a65642142d87   hello-world   "/hello"                2 days ago      Exited (0) 2 days ago                blissful_bose
+	80b0644a0eb5   hello-world   "/hello"                2 days ago      Exited (0) 2 days ago                boring_diffie
