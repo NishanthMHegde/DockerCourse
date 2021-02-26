@@ -1,0 +1,61 @@
+We can create custom Docker images which suits our needs. The steps involved in creating our own image is:
+
+1. Create a Dockerfile in a new directory.
+2. Specify the base image which we plan to use. This base image contains the OS/software that has the programs required to run our installation of dependencies.
+3. Install the required dependency programs. 
+4. Specify the start up command that will be run upon container creation/spinup. 
+
+
+Let us create a simple Docker image to have redis program installed. We will use alpine base image for this.
+The code is:
+
+FROM alpine
+
+RUN apk add --update redis 
+
+CMD ["echo 'Hello World!'"]
+
+This code needs to be placed in a custom directory with the name 'Dockerfile'. We then go to the directory and run "docker build .".
+
+1. Output (first time an image is created):
+	[+] Building 22.5s (6/6) FINISHED
+ => [internal] load build definition from Dockerfile                                                                                                                                                          3.1s  => => transferring dockerfile: 110B                                                                                                                                                                          0.1s  => [internal] load .dockerignore                                                                                                                                                                             2.7s  => => transferring context: 2B                                                                                                                                                                               0.0s  => [internal] load metadata for docker.io/library/alpine:latest                                                                                                                                              5.1s  => [1/2] FROM docker.io/library/alpine@sha256:a75afd8b57e7f34e4dad8d65e2c7ba2e1975c795ce1ee22fa34f8cf46f96a3be                                                                                               5.4s  => => resolve docker.io/library/alpine@sha256:a75afd8b57e7f34e4dad8d65e2c7ba2e1975c795ce1ee22fa34f8cf46f96a3be                                                                                               0.0s  => => sha256:a75afd8b57e7f34e4dad8d65e2c7ba2e1975c795ce1ee22fa34f8cf46f96a3be 1.64kB / 1.64kB                                                                                                                0.0s  => => sha256:4661fb57f7890b9145907a1fe2555091d333ff3d28db86c3bb906f6a2be93c87 528B / 528B                                                                                                                    0.0s  => => sha256:28f6e27057430ed2a40dbdd50d2736a3f0a295924016e294938110eeb8439818 1.47kB / 1.47kB                                                                                                                0.0s  => => sha256:ba3557a56b150f9b813f9d02274d62914fd8fce120dd374d9ee17b87cf1d277d 2.81MB / 2.81MB                                                                                                                2.6s  => => extracting sha256:ba3557a56b150f9b813f9d02274d62914fd8fce120dd374d9ee17b87cf1d277d                                                                                                                     0.4s  => [2/2] RUN apk add --update redis                                                                                                                                                                          6.6s  => exporting to image                                                                                                                                                                                        1.8s  => => exporting layers                                                                                                                                                                                       1.0s  => => writing image sha256:fda5415fcfb2cc046848c929ab4f54fd27c66f442dd69542e05b7ab912beaf38                                                                                                                  0.8s
+
+
+
+ In the above example, the alpine base image is downloaded and then the redis server is installed and updated. 
+
+
+ 2. Output (when the docker build is run again for the same docker build file)
+
+  => [internal] load build definition from Dockerfile                                                                                                                                                          2.8s  => => transferring dockerfile: 101B                                                                                                                                                                          0.1s  => [internal] load .dockerignore                                                                                                                                                                             2.1s  => => transferring context: 2B                                                                                                                                                                               0.0s  => [internal] load metadata for docker.io/library/alpine:latest                                                                                                                                              1.6s  => [1/2] FROM docker.io/library/alpine@sha256:a75afd8b57e7f34e4dad8d65e2c7ba2e1975c795ce1ee22fa34f8cf46f96a3be                                                                                               0.0s  => CACHED [2/2] RUN apk add --update redis                                                                                                                                                                   0.0s  => exporting to image                                                                                                                                                                                        0.2s  => => exporting layers                                                                                                                                                                                       0.0s  => => writing image sha256:801872f09ce0e6d88039d8010b456fdb5a6fe96ce2a9045e7bb5a8873e42dc43
+
+  In the above example, the build is quicker as the steps and images are cached. 
+
+
+  3. We can now run the image by using docker run -it 801872f09ce0e6d88039d8010b456fdb5a6fe96ce2a9045e7bb5a8873e42dc43. This will start the redis container with the startup command (redis-server).
+
+  Output:
+  λ docker run 801872f09ce0e6d88039d8010b456fdb5a6fe96ce2a9045e7bb5a8873e42dc43
+1:C 26 Feb 2021 15:00:24.134 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 26 Feb 2021 15:00:24.134 # Redis version=6.0.11, bits=64, commit=1522534f, modified=0, pid=1, just started
+1:C 26 Feb 2021 15:00:24.134 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 26 Feb 2021 15:00:24.138 * Running mode=standalone, port=6379.
+1:M 26 Feb 2021 15:00:24.138 # Server initialized
+1:M 26 Feb 2021 15:00:24.138 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 26 Feb 2021 15:00:24.138 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
+1:M 26 Feb 2021 15:00:24.139 * Ready to accept connections
+
+D:\DockerCourse\CustomRedisImage (master -> origin)
+λ docker ps
+CONTAINER ID   IMAGE          COMMAND                   CREATED          STATUS          PORTS     NAMES
+72701317ebe3   801872f09ce0   "/bin/sh -c \"redis-s…"   21 seconds ago   Up 17 seconds             sad_aryabhata
+
+
+Let us try to access the redis-cli on the same container. To do this, run the below command on the running container:
+Output:
+λ docker exec -it 72701317ebe3 redis-cli
+127.0.0.1:6379>
+
+
+We can now perform redis client commands.

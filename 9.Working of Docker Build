@@ -1,0 +1,22 @@
+The steps involved in Docker Build are:
+
+1. The base image specified is downloaded. The snapshot of the file system of the image is loaded into the segmented namespace and a snapshot of the container is taken. This snapshot of the container is converted to an image. 
+2. The image from previous step is loaded into the memory by spinning up a container. The dependencies are installed and a snapshot of the container is taken. This snapshot is once again converted to an image. 
+3. The image from previous step is loaded into the memory by spinning up a container. The startup command is run and a snapshot of the container is taken. This snapshot is once again converted to an image. 
+4. The final image SHA26 generated is used to execute docker run and spawn a container. 
+
+
+The steps involved in Docker Build when previous steps are cached are:
+1. The base image is not downloaded again. The SHA256 image generated in the first step is re-used. 
+2. For all the steps that were previously executed and cached, the cached image is used. 
+3. When a new step is encountered, the cached image from previous step is used to spin up a container and the new command is run. Another snapshot is created and a new image is created. 
+4. Caching is effective till a non-cached step is encountered. After that, cache is no longer is used. 
+
+Let us modify the Dockerfile from previous module to install gcc. 
+
+FROM alpine
+
+RUN apk add --update redis 
+RUN apk add --update gcc
+
+CMD ["echo 'Hello World!'"]
