@@ -1,0 +1,22 @@
+In order to fully utilize Docker, we need to be able to reduce the number of image rebuilds.
+
+This can be done by:
+1. Placing the instructions to copy the package.json in the beginning.
+2. Running npm install to install node dependencies.
+3. Copying the code from local machine to the container working directory.
+
+The modified code would look like:
+
+FROM node:alpine
+
+WORKDIR /usr/app
+
+COPY ./package.json ./
+
+RUN npm install
+
+COPY ./ ./
+
+CMD ["npm", "start"] 
+
+This will utilize caching to the maxmimum extent for a nodejs app and take into account any code changes as well. 

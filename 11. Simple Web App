@@ -1,0 +1,38 @@
+Let us create as simple NodeJS web app that displays Hello World and create an image out of it.
+
+Steps required:
+1. Specify base image (node:alpine).
+2. Specify the working directory.
+3. Copy the code from local machine to working directory in the image.
+4. Install the dependencies using npm install.
+5. Start the app using the default startup command. 
+
+
+The Dockerfile for the app would look like:
+
+FROM node:alpine
+
+WORKDIR /usr/app
+
+COPY ./ ./
+
+RUN npm install
+
+CMD ["npm", "start"] 
+
+
+Command to build the image: docker build -t nishanthmhegde/simplewebapp:latest .
+
+Command to run the container: docker run nishanthmhegde/simplewebapp:latest
+
+Output:
+λ docker run nishanthmhegde/simplewebapp:latest
+
+> SimpleWebApp@1.0.0 start
+> node index.js
+
+App is running!
+
+
+Let us try access our app on the specified port on a browser. 
+We get an error on the browser of our local machine. This is because the app is running on a port inside the container but that port cannot be accessed by local machine. We need to do port mapping. 

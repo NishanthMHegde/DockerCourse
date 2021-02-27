@@ -1,0 +1,10 @@
+Port Mapping refers to the process of mapping a port on local machine which receives the incoming connections to a port o the Docker container.
+Command syntax:
+
+docker run -p <port number on local machine>:<port number on Docker container> <image_name>
+
+Let us now run our simplewebapp using port mapping:
+
+Command:
+
+docker run -p 8080:8080 nishanthmhegde/simplewebapp

@@ -1,0 +1,24 @@
+We can provide a name to the custom image that we created so that we can utilize the image name to spin up a container instead of using the SHA256 hash which the docker build command creates. 
+Command to tag an image name:
+
+docker build -t <docker_hub_username>/<image_name>:version .
+
+Example command:
+
+docker build -t nishanthmhegde/myredis:latest .
+
+Output:
+	λ docker build -t nishanthmhegde/myredis:latest .
+[+] Building 4.8s (7/7) FINISHED
+ => [internal] load build definition from Dockerfile                                                                                                                                                          2.0s  => => transferring dockerfile: 31B                                                                                                                                                                           0.0s  => [internal] load .dockerignore                                                                                                                                                                             2.4s  => => transferring context: 2B                                                                                                                                                                               0.0s  => [internal] load metadata for docker.io/library/alpine:latest                                                                                                                                              1.6s  => [1/3] FROM docker.io/library/alpine@sha256:a75afd8b57e7f34e4dad8d65e2c7ba2e1975c795ce1ee22fa34f8cf46f96a3be                                                                                               0.0s  => CACHED [2/3] RUN apk add --update redis                                                                                                                                                                   0.0s  => CACHED [3/3] RUN apk add --update gcc                                                                                                                                                                     0.0s  => exporting to image                                                                                                                                                                                        0.4s  => => exporting layers                                                                                                                                                                                       0.0s  => => writing image sha256:f2c17852ff77bd497dff32c8fe7244de45ff431ad565432485be3bc7ca92d3e3                                                                                                                  0.1s  => => naming to docker.io/nishanthmhegde/myredis:latest                                                                                                                                                      0.1s
+
+
+ We can then spin up the container from the image as below:
+ Example command:
+ docker run -it nishanthmhegde/myredis
+
+ Output:
+ 1:M 27 Feb 2021 07:54:34.391 # Server initialized
+1:M 27 Feb 2021 07:54:34.391 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 27 Feb 2021 07:54:34.392 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
+1:M 27 Feb 2021 07:54:34.392 * Ready to accept connections
